@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'auth_page.dart';
 import 'home_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const AuthPage(),
     );
   }
 }
