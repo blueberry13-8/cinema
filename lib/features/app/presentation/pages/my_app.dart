@@ -1,3 +1,4 @@
+import 'package:cinema/features/app/presentation/pages/admin_overview_page.dart';
 import 'package:flutter/material.dart';
 
 import 'auth_page.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: const AuthPage(),
+      home: const AdminOverviewPage(),
     );
   }
 }
