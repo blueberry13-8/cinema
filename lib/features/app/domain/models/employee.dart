@@ -9,7 +9,7 @@ class Employee with _$Employee {
     required int id,
     required String name,
     required String position,
-    required double salary,
+    required num salary,
   }) = _Employee;
 
   factory Employee.fromJson(Map<String, Object?> json) =>

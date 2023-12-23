@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'session.freezed.dart';
-part 'session.g.dart';
+part 'movie_session.freezed.dart';
+part 'movie_session.g.dart';
 
 @freezed
-class Session with _$Session {
-  const factory Session({
+class MovieSession with _$MovieSession {
+  const factory MovieSession({
     required int id,
     @JsonKey(name: 'movie_id')
     required int movieId,
@@ -13,8 +13,8 @@ class Session with _$Session {
     required int hallId,
     @JsonKey(name: 'start_time')
     required DateTime startTime,
-  }) = _Session;
+  }) = _MovieSession;
 
-  factory Session.fromJson(Map<String, Object?> json) =>
-      _$SessionFromJson(json);
+  factory MovieSession.fromJson(Map<String, Object?> json) =>
+      _$MovieSessionFromJson(json);
 }
