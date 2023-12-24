@@ -35,8 +35,8 @@ class AdminOverviewPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 150,
-            vertical: 100,
+            horizontal: 0,
+            vertical: 0,
           ),
           child: TabBarView(
             children: [
