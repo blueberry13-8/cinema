@@ -1,12 +1,12 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/models/session.dart';
+import '../../domain/models/movie_session.dart';
 
 class SessionsTable extends StatelessWidget {
   const SessionsTable({super.key, required this.sessions});
 
-  final List<Session> sessions;
+  final List<MovieSession> sessions;
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:cinema/features/app/presentation/widgets/my_table.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,20 @@ class CustomersTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MyTable(
+      columns: const [
+        Text('ID'),
+        Text('Login'),
+        Text('Password'),
+      ],
+      rows: customers
+          .map(
+            (e) => [e.id.toString(), e.login, e.password]
+                .map((e) => Text(e))
+                .toList(),
+          )
+          .toList(),
+    );
     return DataTable2(
       showCheckboxColumn: false,
       columnSpacing: 12,
@@ -30,7 +45,7 @@ class CustomersTable extends StatelessWidget {
       rows: customers
           .map(
             (customer) => DataRow2(
-              onSelectChanged: (_){},
+              onSelectChanged: (_) {},
 
               // color: MaterialStateProperty.resolveWith((states) {
               //   print(states);
