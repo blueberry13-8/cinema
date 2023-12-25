@@ -29,16 +29,18 @@ class _UserSessionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<SessionCubit>().state;
     if (state case Success state) {
-      return Stack(
-        children: [
-          SessionsTable(
-            sessions: state.sessions,
-            selectedSessionIndex: state.selectedSessionIndex,
-          ),
-          if (state.selectedSessionIndex != null)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 400,),
+              child: SessionsTable(
+                sessions: state.sessions,
+                selectedSessionIndex: state.selectedSessionIndex,
+              ),
+            ),
+            if (state.selectedSessionIndex != null)
+              Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 150.0,
                   vertical: 20,
@@ -52,8 +54,8 @@ class _UserSessionsPage extends StatelessWidget {
                   editable: false,
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       );
     } else if (state case Loading || Initial) {
       return const CircularProgressIndicator();

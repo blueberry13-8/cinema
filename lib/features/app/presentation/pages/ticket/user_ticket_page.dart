@@ -29,16 +29,20 @@ class _UserTicketsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<TicketCubit>().state;
     if (state case Success state) {
-      return Stack(
-        children: [
-          TicketsTable(
-            tickets: state.tickets,
-            selectedTicketIndex: state.selectedTicketIndex,
-          ),
-          if (state.selectedTicketIndex != null)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxHeight: 400,
+              ),
+              child: TicketsTable(
+                tickets: state.tickets,
+                selectedTicketIndex: state.selectedTicketIndex,
+              ),
+            ),
+            if (state.selectedTicketIndex != null)
+              Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 150.0,
                   vertical: 20,
@@ -52,8 +56,8 @@ class _UserTicketsPage extends StatelessWidget {
                   editable: false,
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       );
     } else if (state case Loading || Initial) {
       return const CircularProgressIndicator();

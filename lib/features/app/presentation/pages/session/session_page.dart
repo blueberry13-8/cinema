@@ -71,46 +71,48 @@ class _SessionsPageState extends State<_SessionsPage> {
               ),
             ),
           ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 80.0,
-                  vertical: 10,
-                ),
-                child: TextFormField(
-                  controller: _searchController,
-                  onChanged: (newValue) => setState(() {}),
-                  decoration: const InputDecoration(
-                    hintText: 'Search...',
-                    icon: Icon(
-                      Icons.search,
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 80.0,
+                    vertical: 10,
+                  ),
+                  child: TextFormField(
+                    controller: _searchController,
+                    onChanged: (newValue) => setState(() {}),
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      icon: Icon(
+                        Icons.search,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: 400),
-                child: SessionsTable(
-                  sessions: filtered(state.sessions, _searchController.text),
-                  selectedSessionIndex: state.selectedSessionIndex,
-                ),
-              ),
-              if (state.selectedSessionIndex != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 150.0,
-                    vertical: 20,
-                  ),
-                  child: MyEditingSessionWidget(
-                    session: state.selectedSessionIndex! >= 0 &&
-                            state.selectedSessionIndex! < state.sessions.length
-                        ? state.sessions[state.selectedSessionIndex!]
-                        : null,
-                    fields: kSessionFields,
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 400),
+                  child: SessionsTable(
+                    sessions: filtered(state.sessions, _searchController.text),
+                    selectedSessionIndex: state.selectedSessionIndex,
                   ),
                 ),
-            ],
+                if (state.selectedSessionIndex != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 150.0,
+                      vertical: 20,
+                    ),
+                    child: MyEditingSessionWidget(
+                      session: state.selectedSessionIndex! >= 0 &&
+                              state.selectedSessionIndex! < state.sessions.length
+                          ? state.sessions[state.selectedSessionIndex!]
+                          : null,
+                      fields: kSessionFields,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       );

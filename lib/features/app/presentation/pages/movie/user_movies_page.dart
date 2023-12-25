@@ -27,31 +27,35 @@ class _UserMoviesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<MovieCubit>().state;
     if (state case Success state) {
-      return Stack(
-        children: [
-          MoviesTable(
-            movies: state.movies,
-            selectedMovieIndex: state.selectedMovieIndex,
-          ),
-          if (state.selectedMovieIndex != null)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxHeight: 400,
+              ),
+              child: MoviesTable(
+                movies: state.movies,
+                selectedMovieIndex: state.selectedMovieIndex,
+              ),
+            ),
+            if (state.selectedMovieIndex != null)
+              Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 150.0,
                   vertical: 20,
                 ),
                 child: MyEditingMovieWidget(
                   movie: state.selectedMovieIndex! >= 0 &&
-                      state.selectedMovieIndex! < state.movies.length
+                          state.selectedMovieIndex! < state.movies.length
                       ? state.movies[state.selectedMovieIndex!]
                       : null,
                   fields: kMovieFields,
                   editable: false,
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       );
     } else if (state case Loading || Initial) {
       return const CircularProgressIndicator();

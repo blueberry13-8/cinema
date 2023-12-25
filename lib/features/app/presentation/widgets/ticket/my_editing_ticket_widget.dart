@@ -1,5 +1,8 @@
 import 'package:cinema/features/app/domain/models/ticket.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/ticket/ticket_cubit.dart';
 import '../my_form_field.dart';
 
 class MyEditingTicketWidget extends StatefulWidget {
@@ -7,7 +10,7 @@ class MyEditingTicketWidget extends StatefulWidget {
     super.key,
     required this.fields,
     this.ticket,
-    this.editable=true,
+    this.editable = true,
   });
 
   final Ticket? ticket;
@@ -95,6 +98,34 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
         const SizedBox(
           height: 30,
         ),
+        if (widget.editable)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  context.read<TicketCubit>().updateTicket(
+                        _ticket,
+                        widget.ticket == null,
+                      );
+                },
+                child: const Text('Обновить'),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (widget.ticket != null) {
+                    context.read<TicketCubit>().deleteTicket(
+                          widget.ticket!,
+                        );
+                  }
+                },
+                child: const Text('Удалить'),
+              ),
+            ],
+          ),
       ],
     );
   }

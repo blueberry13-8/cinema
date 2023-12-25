@@ -1,5 +1,8 @@
 import 'package:cinema/features/app/domain/models/movie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/movie/movie_cubit.dart';
 import '../my_form_field.dart';
 
 class MyEditingMovieWidget extends StatefulWidget {
@@ -7,7 +10,7 @@ class MyEditingMovieWidget extends StatefulWidget {
     super.key,
     required this.fields,
     this.movie,
-    this.editable=true,
+    this.editable = true,
   });
 
   final Movie? movie;
@@ -66,6 +69,34 @@ class _MyEditingMovieWidgetState extends State<MyEditingMovieWidget> {
         const SizedBox(
           height: 30,
         ),
+        if (widget.editable)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  context.read<MovieCubit>().updateMovie(
+                        _movie,
+                        widget.movie == null,
+                      );
+                },
+                child: const Text('Обновить'),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (widget.movie != null) {
+                    context.read<MovieCubit>().deleteMovie(
+                          widget.movie!,
+                        );
+                  }
+                },
+                child: const Text('Удалить'),
+              ),
+            ],
+          ),
       ],
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/models/movie_session.dart';
+import '../../bloc/session/session_cubit.dart';
 import '../my_form_field.dart';
 
 class MyEditingSessionWidget extends StatefulWidget {
@@ -65,6 +67,34 @@ class _MyEditingSessionWidgetState extends State<MyEditingSessionWidget> {
         ),
         const SizedBox(
           height: 30,
+        ),
+        if (widget.editable)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                context.read<SessionCubit>().updateSession(
+                  _session,
+                  widget.session == null,
+                );
+              },
+              child: const Text('Обновить'),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (widget.session != null) {
+                  context.read<SessionCubit>().deleteSession(
+                    widget.session!,
+                  );
+                }
+              },
+              child: const Text('Удалить'),
+            ),
+          ],
         ),
       ],
     );

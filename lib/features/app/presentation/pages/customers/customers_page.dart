@@ -71,47 +71,49 @@ class _CustomersPageState extends State<_CustomersPage> {
               ),
             ),
           ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 80.0,
-                  vertical: 10,
-                ),
-                child: TextFormField(
-                  controller: _searchController,
-                  onChanged: (newValue) => setState(() {}),
-                  decoration: const InputDecoration(
-                    hintText: 'Search...',
-                    icon: Icon(
-                      Icons.search,
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 80.0,
+                    vertical: 10,
+                  ),
+                  child: TextFormField(
+                    controller: _searchController,
+                    onChanged: (newValue) => setState(() {}),
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      icon: Icon(
+                        Icons.search,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: 400),
-                child: CustomersTable(
-                  customers: filtered(state.customers, _searchController.text),
-                  selectedCustomerIndex: state.selectedCustomerIndex,
-                ),
-              ),
-              if (state.selectedCustomerIndex != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 150.0,
-                    vertical: 20,
-                  ),
-                  child: MyEditingCustomerWidget(
-                    customer: state.selectedCustomerIndex! >= 0 &&
-                            state.selectedCustomerIndex! <
-                                state.customers.length
-                        ? state.customers[state.selectedCustomerIndex!]
-                        : null,
-                    fields: kCustomerFields,
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 400),
+                  child: CustomersTable(
+                    customers: filtered(state.customers, _searchController.text),
+                    selectedCustomerIndex: state.selectedCustomerIndex,
                   ),
                 ),
-            ],
+                if (state.selectedCustomerIndex != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 150.0,
+                      vertical: 20,
+                    ),
+                    child: MyEditingCustomerWidget(
+                      customer: state.selectedCustomerIndex! >= 0 &&
+                              state.selectedCustomerIndex! <
+                                  state.customers.length
+                          ? state.customers[state.selectedCustomerIndex!]
+                          : null,
+                      fields: kCustomerFields,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       );
