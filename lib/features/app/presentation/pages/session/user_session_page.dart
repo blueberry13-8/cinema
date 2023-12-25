@@ -22,8 +22,39 @@ class UserSessionsPage extends StatelessWidget {
   }
 }
 
-class _UserSessionsPage extends StatelessWidget {
+class _UserSessionsPage extends StatefulWidget {
   const _UserSessionsPage({super.key});
+
+  @override
+  State<_UserSessionsPage> createState() => _UserSessionsPageState();
+}
+
+class _UserSessionsPageState extends State<_UserSessionsPage> {
+
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<MovieSession> filtered(List<MovieSession> sessions, String? query) {
+    if (query == null) return sessions;
+    return sessions
+        .where(
+          (element) => element.id.toString().toLowerCase().contains(
+        query.toLowerCase(),
+      ),
+    )
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +63,26 @@ class _UserSessionsPage extends StatelessWidget {
       return SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 80.0,
+                vertical: 10,
+              ),
+              child: TextFormField(
+                controller: _searchController,
+                onChanged: (newValue) => setState(() {}),
+                decoration: const InputDecoration(
+                  hintText: 'Search...',
+                  icon: Icon(
+                    Icons.search,
+                  ),
+                ),
+              ),
+            ),
             ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: 400,),
               child: SessionsTable(
-                sessions: state.sessions,
+                sessions: filtered(state.sessions, _searchController.text),
                 selectedSessionIndex: state.selectedSessionIndex,
               ),
             ),

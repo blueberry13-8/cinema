@@ -20,8 +20,39 @@ class UserMoviesPage extends StatelessWidget {
   }
 }
 
-class _UserMoviesPage extends StatelessWidget {
+class _UserMoviesPage extends StatefulWidget {
   const _UserMoviesPage({super.key});
+
+  @override
+  State<_UserMoviesPage> createState() => _UserMoviesPageState();
+}
+
+class _UserMoviesPageState extends State<_UserMoviesPage> {
+
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Movie> filtered(List<Movie> movies, String? query) {
+    if (query == null) return movies;
+    return movies
+        .where(
+          (element) => element.name.toLowerCase().contains(
+        query.toLowerCase(),
+      ),
+    )
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +61,28 @@ class _UserMoviesPage extends StatelessWidget {
       return SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 80.0,
+                vertical: 10,
+              ),
+              child: TextFormField(
+                controller: _searchController,
+                onChanged: (newValue) => setState(() {}),
+                decoration: const InputDecoration(
+                  hintText: 'Search...',
+                  icon: Icon(
+                    Icons.search,
+                  ),
+                ),
+              ),
+            ),
             ConstrainedBox(
               constraints: const BoxConstraints(
                 maxHeight: 400,
               ),
               child: MoviesTable(
-                movies: state.movies,
+                movies: filtered(state.movies, _searchController.text),
                 selectedMovieIndex: state.selectedMovieIndex,
               ),
             ),

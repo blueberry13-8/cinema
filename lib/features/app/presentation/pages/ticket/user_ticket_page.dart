@@ -22,8 +22,39 @@ class UserTicketsPage extends StatelessWidget {
   }
 }
 
-class _UserTicketsPage extends StatelessWidget {
+class _UserTicketsPage extends StatefulWidget {
   const _UserTicketsPage({super.key});
+
+  @override
+  State<_UserTicketsPage> createState() => _UserTicketsPageState();
+}
+
+class _UserTicketsPageState extends State<_UserTicketsPage> {
+
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Ticket> filtered(List<Ticket> tickets, String? query) {
+    if (query == null) return tickets;
+    return tickets
+        .where(
+          (element) => element.id.toString().toLowerCase().contains(
+        query.toLowerCase(),
+      ),
+    )
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +63,28 @@ class _UserTicketsPage extends StatelessWidget {
       return SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 80.0,
+                vertical: 10,
+              ),
+              child: TextFormField(
+                controller: _searchController,
+                onChanged: (newValue) => setState(() {}),
+                decoration: const InputDecoration(
+                  hintText: 'Search...',
+                  icon: Icon(
+                    Icons.search,
+                  ),
+                ),
+              ),
+            ),
             ConstrainedBox(
               constraints: const BoxConstraints(
                 maxHeight: 400,
               ),
               child: TicketsTable(
-                tickets: state.tickets,
+                tickets: filtered(state.tickets, _searchController.text),
                 selectedTicketIndex: state.selectedTicketIndex,
               ),
             ),
