@@ -23,7 +23,7 @@ class MyFormField<T> extends StatefulWidget {
 
 class _MyFormFieldState<T> extends State<MyFormField<T>> {
   late TextEditingController _controller;
-  String? errorText = 'Неправильный формат данных';
+  String? errorText = null;
 
   @override
   void initState() {
