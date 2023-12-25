@@ -114,33 +114,33 @@ class MovieCubit extends Cubit<MovieState> {
     }
   }
 
-  Future<void> updateMovie2(Map<String, String> fields, [bool isAdd = false]) async {
-    final movie = Movie(
-        id: int.parse(fields['id']!),
-        duration: int.parse(fields['duration']!),
-        genre: fields['genre']!,
-        name: fields['name']!);
-    Success? prevState;
-    if (state case Success state) {
-      prevState = state.copyWith();
-    }
-    emit(const MovieState.loading());
-    try {
-      if (isAdd) {
-        await Database().addMovie(movie);
-      } else {
-        await Database().updateMovie(movie);
-      }
-      final movies = await Database().getMovies();
-      emit(
-        MovieState.success(
-          movies: movies,
-          selectedMovieIndex: prevState?.selectedMovieIndex,
-        ),
-      );
-    } catch (e) {
-      emit(MovieState.error(e.toString()));
-      rethrow;
-    }
-  }
+  // Future<void> updateMovie2(Map<String, String> fields, [bool isAdd = false]) async {
+  //   final movie = Movie(
+  //       id: int.parse(fields['id']!),
+  //       duration: int.parse(fields['duration']!),
+  //       genre: fields['genre']!,
+  //       name: fields['name']!);
+  //   Success? prevState;
+  //   if (state case Success state) {
+  //     prevState = state.copyWith();
+  //   }
+  //   emit(const MovieState.loading());
+  //   try {
+  //     if (isAdd) {
+  //       await Database().addMovie(movie);
+  //     } else {
+  //       await Database().updateMovie(movie);
+  //     }
+  //     final movies = await Database().getMovies();
+  //     emit(
+  //       MovieState.success(
+  //         movies: movies,
+  //         selectedMovieIndex: prevState?.selectedMovieIndex,
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     emit(MovieState.error(e.toString()));
+  //     rethrow;
+  //   }
+  // }
 }

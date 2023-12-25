@@ -1,9 +1,9 @@
 import 'package:cinema/features/app/domain/repositories/database.dart';
-import 'package:cinema/features/app/presentation/widgets/sessions_table.dart';
 import 'package:cinema/features/app/presentation/widgets/tickets_table.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/movie/movies_table.dart';
+import '../widgets/session/sessions_table.dart';
 
 class UserOverviewPage extends StatelessWidget {
   const UserOverviewPage({super.key});

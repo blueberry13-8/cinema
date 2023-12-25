@@ -113,34 +113,34 @@ class CustomerCubit extends Cubit<CustomerState> {
     }
   }
 
-  Future<void> updateCustomer2(Map<String, String> fields,
-      [bool isAdd = false]) async {
-    final customer = Customer(
-      id: int.parse(fields['id']!),
-      login: fields['login']!,
-      password: fields['password']!,
-    );
-    Success? prevState;
-    if (state case Success state) {
-      prevState = state.copyWith();
-    }
-    emit(const CustomerState.loading());
-    try {
-      if (isAdd) {
-        await Database().addCustomer(customer);
-      } else {
-        await Database().updateCustomer(customer);
-      }
-      final customers = await Database().getCustomers();
-      emit(
-        CustomerState.success(
-          customers: customers,
-          selectedCustomerIndex: prevState?.selectedCustomerIndex,
-        ),
-      );
-    } catch (e) {
-      emit(CustomerState.error(e.toString()));
-      rethrow;
-    }
-  }
+  // Future<void> updateCustomer2(Map<String, String> fields,
+  //     [bool isAdd = false]) async {
+  //   final customer = Customer(
+  //     id: int.parse(fields['id']!),
+  //     login: fields['login']!,
+  //     password: fields['password']!,
+  //   );
+  //   Success? prevState;
+  //   if (state case Success state) {
+  //     prevState = state.copyWith();
+  //   }
+  //   emit(const CustomerState.loading());
+  //   try {
+  //     if (isAdd) {
+  //       await Database().addCustomer(customer);
+  //     } else {
+  //       await Database().updateCustomer(customer);
+  //     }
+  //     final customers = await Database().getCustomers();
+  //     emit(
+  //       CustomerState.success(
+  //         customers: customers,
+  //         selectedCustomerIndex: prevState?.selectedCustomerIndex,
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     emit(CustomerState.error(e.toString()));
+  //     rethrow;
+  //   }
+  // }
 }

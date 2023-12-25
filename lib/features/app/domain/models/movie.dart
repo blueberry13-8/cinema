@@ -1,3 +1,4 @@
+import 'package:cinema/features/app/domain/models/iprops.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'movie.freezed.dart';

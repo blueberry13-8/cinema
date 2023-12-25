@@ -1,11 +1,13 @@
 import 'package:cinema/features/app/domain/repositories/database.dart';
 import 'package:cinema/features/app/presentation/pages/customers/customers_page.dart';
+import 'package:cinema/features/app/presentation/pages/session/session_page.dart';
+import 'package:cinema/features/app/presentation/pages/ticket/ticket_page.dart';
 import 'package:cinema/features/app/presentation/widgets/customers/customers_table.dart';
-import 'package:cinema/features/app/presentation/widgets/sessions_table.dart';
 import 'package:cinema/features/app/presentation/widgets/tickets_table.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/movie/movies_table.dart';
+import '../widgets/session/sessions_table.dart';
 import 'movie/movies_page.dart';
 
 class AdminOverviewPage extends StatelessWidget {
@@ -46,26 +48,8 @@ class AdminOverviewPage extends StatelessWidget {
             children: [
               const CustomersPage(),
               const MoviesPage(),
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? SessionsTable(
-                          sessions: snapshot.requireData,
-                        )
-                      : const CircularProgressIndicator();
-                },
-                future: Database().getSessions(),
-              ),
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? TicketsTable(
-                          tickets: snapshot.requireData,
-                        )
-                      : const CircularProgressIndicator();
-                },
-                future: Database().getTickets(),
-              ),
+              const SessionsPage(),
+              const TicketsPage(),
             ],
           ),
         ),
