@@ -252,9 +252,10 @@ class Database {
 
   Future<void> updateCustomer(Customer item) async {
     await connect();
+    var hashedPassword = md5.convert(utf8.encode(item.password)).toString();
     await conn!.execute(
       r'UPDATE Customer SET login=$1, password=$2 WHERE id=$3',
-      parameters: [item.login, item.password, item.id],
+      parameters: [item.login, hashedPassword, item.id],
     );
   }
 
