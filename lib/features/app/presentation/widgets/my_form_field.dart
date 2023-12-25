@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MyFormField<T> extends StatefulWidget {
   const MyFormField({
@@ -7,7 +8,7 @@ class MyFormField<T> extends StatefulWidget {
     required this.value,
     this.onChanged,
     this.enabled = true,
-    this.editable= true,
+    this.editable = true,
   });
 
   final String fieldName;
@@ -22,6 +23,7 @@ class MyFormField<T> extends StatefulWidget {
 
 class _MyFormFieldState<T> extends State<MyFormField<T>> {
   late TextEditingController _controller;
+  String? errorText = 'Неправильный формат данных';
 
   @override
   void initState() {
@@ -56,13 +58,32 @@ class _MyFormFieldState<T> extends State<MyFormField<T>> {
             enabled: widget.enabled,
             readOnly: !widget.editable,
             controller: _controller,
-            onChanged: widget.onChanged,
+            onChanged: (text) {
+              if (widget.onChanged != null) {
+                try {
+                  validate(_controller.text);
+                  widget.onChanged!(text);
+                } on (FormatException e,){
+                  errorText = 'Неправильный формат данных';
+                }
+              }
+              setState(() {});
+            },
             decoration: InputDecoration(
               hintText: widget.fieldName,
+              errorText: errorText,
             ),
           ),
         ),
       ],
     );
+  }
+
+  void validate(String text) {
+    if (text.isEmpty) {
+      errorText = 'Поле не может быть пустым';
+    } else {
+      errorText = null;
+    }
   }
 }
