@@ -1,38 +1,39 @@
-import 'package:cinema/features/app/presentation/bloc/movie_cubit.dart';
+import 'package:cinema/features/app/domain/models/customer.dart';
+import 'package:cinema/features/app/presentation/bloc/customer/customer_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/movies_table.dart';
-import '../widgets/my_editing_widget.dart';
+import '../../widgets/customers/customers_table.dart';
+import '../../widgets/customers/my_editing_customer_widget.dart';
 
-class MoviesPage extends StatelessWidget {
-  const MoviesPage({super.key});
+class CustomersPage extends StatelessWidget {
+  const CustomersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MovieCubit()..loadMovies(),
-      child: _MoviesPage(
+      create: (context) => CustomerCubit()..loadCustomers(),
+      child: _CustomersPage(
         key: key,
       ),
     );
   }
 }
 
-class _MoviesPage extends StatelessWidget {
-  const _MoviesPage({super.key});
+class _CustomersPage extends StatelessWidget {
+  const _CustomersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<MovieCubit>().state;
+    final state = context.watch<CustomerCubit>().state;
     if (state case Success state) {
       return Stack(
         children: [
-          MoviesTable(
-            movies: state.movies,
-            selectedMovieIndex: state.selectedMovieIndex,
+          CustomersTable(
+            customers: state.customers,
+            selectedCustomerIndex: state.selectedCustomerIndex,
           ),
-          if (state.selectedMovieIndex != null)
+          if (state.selectedCustomerIndex != null)
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -40,12 +41,12 @@ class _MoviesPage extends StatelessWidget {
                   horizontal: 150.0,
                   vertical: 20,
                 ),
-                child: MyEditingMovieWidget(
-                  movie: state.selectedMovieIndex! >= 0 &&
-                          state.selectedMovieIndex! < state.movies.length
-                      ? state.movies[state.selectedMovieIndex!]
+                child: MyEditingCustomerWidget(
+                  customer: state.selectedCustomerIndex! >= 0 &&
+                          state.selectedCustomerIndex! < state.customers.length
+                      ? state.customers[state.selectedCustomerIndex!]
                       : null,
-                  fields: const ['ID', 'Duration', 'Genre', 'Name'],
+                  fields: kCustomerFields,
                 ),
               ),
             ),
@@ -55,7 +56,7 @@ class _MoviesPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
                 onPressed: () {
-                  context.read<MovieCubit>().selectMovie(-1);
+                  context.read<CustomerCubit>().selectCustomer(-1);
                 },
                 child: const Icon(Icons.add),
               ),

@@ -1,9 +1,9 @@
 import 'package:cinema/features/app/domain/models/movie.dart';
-import 'package:cinema/features/app/presentation/bloc/movie_cubit.dart';
+import 'package:cinema/features/app/presentation/bloc/movie/movie_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'my_form_field.dart';
+import '../my_form_field.dart';
 
 class MyEditingMovieWidget extends StatefulWidget {
   const MyEditingMovieWidget({

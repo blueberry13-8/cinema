@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cinema/features/app/domain/repositories/database.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/models/movie.dart';
+import '../../../domain/models/movie.dart';
 
 part 'movie_cubit.freezed.dart';
 

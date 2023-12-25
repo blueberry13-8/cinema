@@ -15,3 +15,5 @@ class Movie with _$Movie {
   factory Movie.fromJson(Map<String, Object?> json) =>
       _$MovieFromJson(json);
 }
+
+const kMovieFields = ['ID', 'Duration', 'Genre', 'Name'];
