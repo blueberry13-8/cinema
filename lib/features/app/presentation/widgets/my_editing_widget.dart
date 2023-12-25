@@ -8,52 +8,57 @@ import 'my_form_field.dart';
 class MyEditingMovieWidget extends StatefulWidget {
   const MyEditingMovieWidget({
     super.key,
+    required this.fields,
     this.movie,
   });
 
   final Movie? movie;
+  final List<String> fields;
 
   @override
   State<MyEditingMovieWidget> createState() => _MyEditingMovieWidgetState();
 }
 
 class _MyEditingMovieWidgetState extends State<MyEditingMovieWidget> {
-  Map<String, String> _fields = Map.fromEntries(
-    const Movie(id: 1, duration: 1, genre: '', name: '').toJson().entries.map(
-          (e) => MapEntry(
-            e.key,
-            '',
-          ),
-        ),
-  );
-
   @override
   void initState() {
     super.initState();
-    if (widget.movie != null) {
-      _fields = widget.movie!.toJson().map(
-            (key, value) => MapEntry(
-              key,
-              value.toString(),
-            ),
-          );
+    if (widget.movie == null) {
+      _movie = const Movie(id: -1, duration: -1, genre: '', name: '');
+    } else {
+      _movie = widget.movie!;
     }
   }
+
+  late Movie _movie;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ..._fields.entries
-            .map(
-              (entry) => MyFormField(
-                fieldName: entry.key.toUpperCase(),
-                value: entry.value,
-                onChanged: (newValue) => _fields[entry.key] = newValue,
-              ),
-            )
-            .toList(),
+        MyFormField(
+          fieldName: widget.fields[0],
+          value: widget.movie?.id,
+          onChanged: (newValue) =>
+              _movie = _movie.copyWith(id: int.parse(newValue)),
+        ),
+        MyFormField(
+          fieldName: widget.fields[1],
+          value: widget.movie?.duration,
+          onChanged: (newValue) =>
+              _movie = _movie.copyWith(duration: int.parse(newValue)),
+        ),
+        MyFormField(
+          fieldName: widget.fields[2],
+          value: widget.movie?.genre,
+          onChanged: (newValue) => _movie = _movie.copyWith(genre: newValue),
+        ),
+        MyFormField(
+          fieldName: widget.fields[3],
+          value: widget.movie?.name,
+          onChanged: (newValue) => _movie = _movie.copyWith(name: newValue),
+        ),
         const SizedBox(
           height: 30,
         ),
@@ -62,8 +67,8 @@ class _MyEditingMovieWidgetState extends State<MyEditingMovieWidget> {
           children: [
             ElevatedButton(
               onPressed: () {
-                context.read<MovieCubit>().updateMovie2(
-                      _fields,
+                context.read<MovieCubit>().updateMovie(
+                      _movie,
                       widget.movie == null,
                     );
               },
@@ -74,14 +79,11 @@ class _MyEditingMovieWidgetState extends State<MyEditingMovieWidget> {
             ),
             ElevatedButton(
               onPressed: () async {
-                context.read<MovieCubit>().deleteMovie(
-                      Movie(
-                        id: int.parse(_fields['id']!),
-                        duration: -1,
-                        genre: 'asda',
-                        name: 'asdsdf',
-                      ),
-                    );
+                if (widget.movie != null) {
+                  context.read<MovieCubit>().deleteMovie(
+                        widget.movie!,
+                      );
+                }
               },
               child: const Text('Удалить'),
             ),

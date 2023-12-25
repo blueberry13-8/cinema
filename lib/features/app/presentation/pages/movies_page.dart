@@ -42,6 +42,7 @@ class _MoviesPage extends StatelessWidget {
                 ),
                 child: MyEditingMovieWidget(
                   movie: state.selectedMovieIndex! >= 0 ? state.movies[state.selectedMovieIndex!]: null,
+                  fields: const ['ID', 'Duration', 'Genre', 'Name'],
                 ),
               ),
             ),

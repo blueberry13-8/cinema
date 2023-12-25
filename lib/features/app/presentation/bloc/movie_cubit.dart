@@ -37,6 +37,7 @@ class MovieCubit extends Cubit<MovieState> {
       );
     } catch (e) {
       emit(MovieState.error(e.toString()));
+      rethrow;
     }
   }
 
@@ -61,6 +62,7 @@ class MovieCubit extends Cubit<MovieState> {
       );
     } catch (e) {
       emit(MovieState.error(e.toString()));
+      rethrow;
     }
   }
 
@@ -108,6 +110,7 @@ class MovieCubit extends Cubit<MovieState> {
       );
     } catch (e) {
       emit(MovieState.error(e.toString()));
+      rethrow;
     }
   }
 
@@ -137,6 +140,7 @@ class MovieCubit extends Cubit<MovieState> {
       );
     } catch (e) {
       emit(MovieState.error(e.toString()));
+      rethrow;
     }
   }
 }

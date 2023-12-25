@@ -22,13 +22,13 @@ class _MyFormFieldState<T> extends State<MyFormField<T>> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.value.toString());
+    _controller = TextEditingController(text: widget.value?.toString() ?? '');
   }
 
   @override
   void didUpdateWidget(covariant MyFormField<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _controller.text = widget.value.toString();
+    _controller.text = widget.value?.toString() ?? '';
   }
 
   @override
