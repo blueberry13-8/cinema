@@ -172,7 +172,7 @@ class Database {
   Future<void> deleteMovie(Movie item) async {
     await connect();
     await conn!.execute(
-      r'DELETE CASCADE FROM Movie WHERE id=$1',
+      r'DELETE FROM Movie WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -196,7 +196,7 @@ class Database {
   Future<void> deleteHall(Hall item) async {
     await connect();
     await conn!.execute(
-      r'DELETE CASCADE FROM Hall WHERE id=$1',
+      r'DELETE  FROM Hall WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -220,7 +220,7 @@ class Database {
   Future<void> deleteSession(MovieSession item) async {
     await connect();
     await conn!.execute(
-      r'DELETE CASCADE FROM Session WHERE id=$1',
+      r'DELETE  FROM Session WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -244,7 +244,7 @@ class Database {
   Future<void> deleteCustomer(Customer item) async {
     await connect();
     await conn!.execute(
-      r'DELETE CASCADE FROM Customer WHERE id=$1',
+      r'DELETE  FROM Customer WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -268,7 +268,7 @@ class Database {
   Future<void> deleteEmployee(Employee item) async {
     await connect();
     await conn!.execute(
-      r'DELETE CASCADE FROM Employee WHERE id=$1',
+      r'DELETE  FROM Employee WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -292,7 +292,7 @@ class Database {
   Future<void> deleteTicket(Ticket item) async {
     await connect();
     await conn!.execute(
-      r'DELETE CASCADE FROM Ticket WHERE id=$1',
+      r'DELETE  FROM Ticket WHERE id=$1',
       parameters: [item.id],
     );
   }
