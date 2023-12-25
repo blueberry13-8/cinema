@@ -1,3 +1,4 @@
+import 'package:cinema/features/app/presentation/bloc/auth/auth_cubit.dart';
 import 'package:cinema/features/app/presentation/bloc/ticket/ticket_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,12 +8,14 @@ import '../../widgets/ticket/my_editing_ticket_widget.dart';
 import '../../widgets/ticket/tickets_table.dart';
 
 class UserTicketsPage extends StatelessWidget {
-  const UserTicketsPage({super.key});
+  const UserTicketsPage({super.key, required this.login});
+
+  final String login;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TicketCubit()..loadTickets(),
+      create: (context) => TicketCubit()..loadTickets(login),
       child: _UserTicketsPage(
         key: key,
       ),

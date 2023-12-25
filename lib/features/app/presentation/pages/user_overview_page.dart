@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'movie/user_movies_page.dart';
 
 class UserOverviewPage extends StatelessWidget {
-  const UserOverviewPage({super.key});
+  const UserOverviewPage({super.key, required this.login});
+
+  final String login;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +29,16 @@ class UserOverviewPage extends StatelessWidget {
             ],
           ),
         ),
-        body: const Padding(
-          padding: EdgeInsets.symmetric(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
             horizontal: 0,
             vertical: 0,
           ),
           child: TabBarView(
             children: [
-              UserMoviesPage(),
-              UserSessionsPage(),
-              UserTicketsPage(),
+              const UserMoviesPage(),
+              const UserSessionsPage(),
+              UserTicketsPage(login: login),
             ],
           ),
         ),
