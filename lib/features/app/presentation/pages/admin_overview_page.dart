@@ -1,13 +1,7 @@
-import 'package:cinema/features/app/domain/repositories/database.dart';
 import 'package:cinema/features/app/presentation/pages/customers/customers_page.dart';
 import 'package:cinema/features/app/presentation/pages/session/session_page.dart';
 import 'package:cinema/features/app/presentation/pages/ticket/ticket_page.dart';
-import 'package:cinema/features/app/presentation/widgets/customers/customers_table.dart';
-import 'package:cinema/features/app/presentation/widgets/tickets_table.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/movie/movies_table.dart';
-import '../widgets/session/sessions_table.dart';
 import 'movie/movies_page.dart';
 
 class AdminOverviewPage extends StatelessWidget {
@@ -19,8 +13,6 @@ class AdminOverviewPage extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          leading: null,
-          automaticallyImplyLeading: false,
           bottom: const TabBar(
             tabAlignment: TabAlignment.center,
             tabs: [

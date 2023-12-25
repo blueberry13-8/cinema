@@ -6,11 +6,13 @@ class MyFormField<T> extends StatefulWidget {
     required this.fieldName,
     required this.value,
     this.onChanged,
+    this.editable=true,
   });
 
   final String fieldName;
   final T value;
   final void Function(String)? onChanged;
+  final bool editable;
 
   @override
   State<MyFormField<T>> createState() => _MyFormFieldState<T>();
@@ -49,6 +51,7 @@ class _MyFormFieldState<T> extends State<MyFormField<T>> {
         ),
         Expanded(
           child: TextFormField(
+            readOnly: !widget.editable,
             controller: _controller,
             onChanged: widget.onChanged,
             decoration: InputDecoration(

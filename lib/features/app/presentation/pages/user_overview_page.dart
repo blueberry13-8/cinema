@@ -1,9 +1,7 @@
-import 'package:cinema/features/app/domain/repositories/database.dart';
-import 'package:cinema/features/app/presentation/widgets/tickets_table.dart';
+import 'package:cinema/features/app/presentation/pages/session/user_session_page.dart';
+import 'package:cinema/features/app/presentation/pages/ticket/user_ticket_page.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/movie/movies_table.dart';
-import '../widgets/session/sessions_table.dart';
+import 'movie/user_movies_page.dart';
 
 class UserOverviewPage extends StatelessWidget {
   const UserOverviewPage({super.key});
@@ -14,8 +12,6 @@ class UserOverviewPage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          leading: null,
-          automaticallyImplyLeading: false,
           bottom: const TabBar(
             tabAlignment: TabAlignment.center,
             tabs: [
@@ -31,43 +27,16 @@ class UserOverviewPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 150,
-            vertical: 100,
+        body: const Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 0,
+            vertical: 0,
           ),
           child: TabBarView(
             children: [
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? MoviesTable(
-                    movies: snapshot.requireData,
-                  )
-                      : const CircularProgressIndicator();
-                },
-                future: Database().getMovies(),
-              ),
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? SessionsTable(
-                    sessions: snapshot.requireData,
-                  )
-                      : const CircularProgressIndicator();
-                },
-                future: Database().getSessions(),
-              ),
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? TicketsTable(
-                    tickets: snapshot.requireData,
-                  )
-                      : const CircularProgressIndicator();
-                },
-                future: Database().getTickets(),
-              ),
+              UserMoviesPage(),
+              UserSessionsPage(),
+              UserTicketsPage(),
             ],
           ),
         ),

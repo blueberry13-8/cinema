@@ -1,6 +1,6 @@
 -- Create Cinema Database
---CREATE DATABASE cinema;
---\c cinema;
+CREATE DATABASE cinema;
+\c cinema;
 
 -- Create Movie Table
 CREATE TABLE Movie (
