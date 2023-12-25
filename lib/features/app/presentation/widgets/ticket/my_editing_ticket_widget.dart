@@ -45,6 +45,7 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         MyFormField(
+          enabled: false,
           fieldName: widget.fields[0],
           value: widget.ticket?.id,
           onChanged: (newValue) => _ticket = _ticket.copyWith(

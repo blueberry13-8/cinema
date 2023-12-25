@@ -5,12 +5,13 @@ class MyFormField<T> extends StatefulWidget {
     super.key,
     required this.fieldName,
     required this.value,
-    this.onChanged,
+    this.onChanged, this.enabled = true,
   });
 
   final String fieldName;
   final T value;
   final void Function(String)? onChanged;
+  final bool enabled;
 
   @override
   State<MyFormField<T>> createState() => _MyFormFieldState<T>();
@@ -49,6 +50,7 @@ class _MyFormFieldState<T> extends State<MyFormField<T>> {
         ),
         Expanded(
           child: TextFormField(
+            enabled: widget.enabled,
             controller: _controller,
             onChanged: widget.onChanged,
             decoration: InputDecoration(

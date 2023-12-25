@@ -39,6 +39,7 @@ class _MyEditingCustomerWidgetState extends State<MyEditingCustomerWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         MyFormField(
+          enabled: false,
           fieldName: widget.fields[0],
           value: widget.customer?.id,
           onChanged: (newValue) =>

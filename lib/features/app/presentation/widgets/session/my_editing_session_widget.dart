@@ -38,6 +38,7 @@ class _MyEditingSessionWidgetState extends State<MyEditingSessionWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         MyFormField(
+          enabled: false,
           fieldName: widget.fields[0],
           value: widget.session?.id,
           onChanged: (newValue) =>

@@ -38,6 +38,7 @@ class _MyEditingMovieWidgetState extends State<MyEditingMovieWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         MyFormField(
+          enabled: false,
           fieldName: widget.fields[0],
           value: widget.movie?.id,
           onChanged: (newValue) =>
