@@ -20,8 +20,38 @@ class CustomersPage extends StatelessWidget {
   }
 }
 
-class _CustomersPage extends StatelessWidget {
+class _CustomersPage extends StatefulWidget {
   const _CustomersPage({super.key});
+
+  @override
+  State<_CustomersPage> createState() => _CustomersPageState();
+}
+
+class _CustomersPageState extends State<_CustomersPage> {
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Customer> filtered(List<Customer> customers, String? query) {
+    if (query == null) return customers;
+    return customers
+        .where(
+          (element) => element.login.toLowerCase().contains(
+                query.toLowerCase(),
+              ),
+        )
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,27 +59,6 @@ class _CustomersPage extends StatelessWidget {
     if (state case Success state) {
       return Stack(
         children: [
-          CustomersTable(
-            customers: state.customers,
-            selectedCustomerIndex: state.selectedCustomerIndex,
-          ),
-          if (state.selectedCustomerIndex != null)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 150.0,
-                  vertical: 20,
-                ),
-                child: MyEditingCustomerWidget(
-                  customer: state.selectedCustomerIndex! >= 0 &&
-                          state.selectedCustomerIndex! < state.customers.length
-                      ? state.customers[state.selectedCustomerIndex!]
-                      : null,
-                  fields: kCustomerFields,
-                ),
-              ),
-            ),
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
@@ -61,6 +70,48 @@ class _CustomersPage extends StatelessWidget {
                 child: const Icon(Icons.add),
               ),
             ),
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 80.0,
+                  vertical: 10,
+                ),
+                child: TextFormField(
+                  controller: _searchController,
+                  onChanged: (newValue) => setState(() {}),
+                  decoration: const InputDecoration(
+                    hintText: 'Search...',
+                    icon: Icon(
+                      Icons.search,
+                    ),
+                  ),
+                ),
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 400),
+                child: CustomersTable(
+                  customers: filtered(state.customers, _searchController.text),
+                  selectedCustomerIndex: state.selectedCustomerIndex,
+                ),
+              ),
+              if (state.selectedCustomerIndex != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 150.0,
+                    vertical: 20,
+                  ),
+                  child: MyEditingCustomerWidget(
+                    customer: state.selectedCustomerIndex! >= 0 &&
+                            state.selectedCustomerIndex! <
+                                state.customers.length
+                        ? state.customers[state.selectedCustomerIndex!]
+                        : null,
+                    fields: kCustomerFields,
+                  ),
+                ),
+            ],
           ),
         ],
       );

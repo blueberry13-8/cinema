@@ -9,16 +9,20 @@ class TicketsTable extends StatelessWidget {
   const TicketsTable({
     super.key,
     required this.tickets,
-    this.selectedTicketIndex,
+    this.selectedTicketIndex, this.scrollController,
   });
 
   final List<Ticket> tickets;
 
   final int? selectedTicketIndex;
 
+  final ScrollController? scrollController;
+
   @override
   Widget build(BuildContext context) {
     return DataTable2(
+      scrollController: scrollController,
+
       columnSpacing: 12,
       horizontalMargin: 12,
       minWidth: 600,

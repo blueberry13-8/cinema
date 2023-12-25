@@ -20,8 +20,38 @@ class MoviesPage extends StatelessWidget {
   }
 }
 
-class _MoviesPage extends StatelessWidget {
+class _MoviesPage extends StatefulWidget {
   const _MoviesPage({super.key});
+
+  @override
+  State<_MoviesPage> createState() => _MoviesPageState();
+}
+
+class _MoviesPageState extends State<_MoviesPage> {
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Movie> filtered(List<Movie> movies, String? query) {
+    if (query == null) return movies;
+    return movies
+        .where(
+          (element) => element.name.toLowerCase().contains(
+                query.toLowerCase(),
+              ),
+        )
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,27 +59,6 @@ class _MoviesPage extends StatelessWidget {
     if (state case Success state) {
       return Stack(
         children: [
-          MoviesTable(
-            movies: state.movies,
-            selectedMovieIndex: state.selectedMovieIndex,
-          ),
-          if (state.selectedMovieIndex != null)
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 150.0,
-                  vertical: 20,
-                ),
-                child: MyEditingMovieWidget(
-                  movie: state.selectedMovieIndex! >= 0 &&
-                          state.selectedMovieIndex! < state.movies.length
-                      ? state.movies[state.selectedMovieIndex!]
-                      : null,
-                  fields: kMovieFields,
-                ),
-              ),
-            ),
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
@@ -61,6 +70,47 @@ class _MoviesPage extends StatelessWidget {
                 child: const Icon(Icons.add),
               ),
             ),
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 80.0,
+                  vertical: 10,
+                ),
+                child: TextFormField(
+                  controller: _searchController,
+                  onChanged: (newValue) => setState(() {}),
+                  decoration: const InputDecoration(
+                    hintText: 'Search...',
+                    icon: Icon(
+                      Icons.search,
+                    ),
+                  ),
+                ),
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 400),
+                child: MoviesTable(
+                  movies: filtered(state.movies, _searchController.text),
+                  selectedMovieIndex: state.selectedMovieIndex,
+                ),
+              ),
+              if (state.selectedMovieIndex != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 150.0,
+                    vertical: 20,
+                  ),
+                  child: MyEditingMovieWidget(
+                    movie: state.selectedMovieIndex! >= 0 &&
+                            state.selectedMovieIndex! < state.movies.length
+                        ? state.movies[state.selectedMovieIndex!]
+                        : null,
+                    fields: kMovieFields,
+                  ),
+                ),
+            ],
           ),
         ],
       );

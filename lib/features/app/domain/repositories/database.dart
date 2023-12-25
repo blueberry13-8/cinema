@@ -49,8 +49,9 @@ class Database {
 
   Future<List<Movie>> getMovies() async {
     await connect();
+    var query = 'SELECT * FROM Movie';
     final result = await conn!.execute(
-      'SELECT * FROM Movie',
+      query,
     );
     List<Movie> items = [];
     for (int i = 0; i < result.length; i++) {
