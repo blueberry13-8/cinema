@@ -44,6 +44,7 @@ class _MyEditingCustomerWidgetState extends State<MyEditingCustomerWidget> {
           value: widget.customer?.id,
           onChanged: (newValue) =>
               _customer = _customer.copyWith(id: int.parse(newValue)),
+          editable: false,
         ),
         MyFormField(
           fieldName: widget.fields[1],

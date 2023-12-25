@@ -16,7 +16,7 @@ class Database {
   Database._privateConstructor();
 
   final String user = 'postgres',
-      password = 'postgres',
+      password = 'buter',
       host = 'localhost',
       database = 'cinema';
 
@@ -238,7 +238,7 @@ class Database {
     await connect();
     await conn!.execute(
       r'INSERT INTO Customer (login, password) VALUES ($1, $2)',
-      parameters: [item.login, item.password],
+      parameters: [item.login, md5.convert(utf8.encode(item.password)).toString()],
     );
   }
 
@@ -309,7 +309,6 @@ class Database {
   Future<bool> login(String login, String password) async {
     await connect();
     var hashedPassword = md5.convert(utf8.encode(password)).toString();
-    print(hashedPassword);
     var result = await conn!.execute(
       r'SELECT * FROM Customer WHERE login=$1 and password=$2',
       parameters: [login, hashedPassword],
@@ -318,5 +317,32 @@ class Database {
       return true;
     }
     return false;
+  }
+
+  Future<List<Ticket>> getUserTickets(String login) async{
+    await connect();
+    var result = await conn!.execute(
+      r'SELECT * FROM Customer WHERE login=$1',
+      parameters: [login]
+    );
+    int id = result.first[0] as int;
+    result = await conn!.execute(
+        r'SELECT * FROM Ticket WHERE customer_id=$1',
+        parameters: [id]
+    );
+    List<Ticket> items = [];
+    for (int i = 0; i < result.length; i++) {
+      items.add(
+        Ticket(
+          id: result[i][0] as int,
+          seatNumber: result[i][1] as int,
+          rowNumber: result[i][2] as int,
+          price: double.parse(result[i][3] as String),
+          sessionId: result[i][4] as int,
+          customerId: result[i][5] as int,
+        ),
+      );
+    }
+    return items;
   }
 }

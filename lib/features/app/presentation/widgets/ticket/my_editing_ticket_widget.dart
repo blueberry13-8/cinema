@@ -1,8 +1,5 @@
 import 'package:cinema/features/app/domain/models/ticket.dart';
-import 'package:cinema/features/app/presentation/bloc/ticket/ticket_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../my_form_field.dart';
 
 class MyEditingTicketWidget extends StatefulWidget {
@@ -10,10 +7,12 @@ class MyEditingTicketWidget extends StatefulWidget {
     super.key,
     required this.fields,
     this.ticket,
+    this.editable=true,
   });
 
   final Ticket? ticket;
   final List<String> fields;
+  final bool editable;
 
   @override
   State<MyEditingTicketWidget> createState() => _MyEditingTicketWidgetState();
@@ -51,6 +50,7 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
           onChanged: (newValue) => _ticket = _ticket.copyWith(
             id: int.parse(newValue),
           ),
+          editable: false,
         ),
         MyFormField(
           fieldName: widget.fields[1],
@@ -58,6 +58,7 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
           onChanged: (newValue) => _ticket = _ticket.copyWith(
             seatNumber: int.parse(newValue),
           ),
+          editable: widget.editable,
         ),
         MyFormField(
           fieldName: widget.fields[2],
@@ -65,6 +66,7 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
           onChanged: (newValue) => _ticket = _ticket.copyWith(
             rowNumber: int.parse(newValue),
           ),
+          editable: widget.editable,
         ),
         MyFormField(
           fieldName: widget.fields[3],
@@ -72,6 +74,7 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
           onChanged: (newValue) => _ticket = _ticket.copyWith(
             price: double.parse(newValue),
           ),
+          editable: widget.editable,
         ),
         MyFormField(
           fieldName: widget.fields[4],
@@ -79,6 +82,7 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
           onChanged: (newValue) => _ticket = _ticket.copyWith(
             sessionId: int.parse(newValue),
           ),
+          editable: widget.editable,
         ),
         MyFormField(
           fieldName: widget.fields[5],
@@ -86,36 +90,10 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
           onChanged: (newValue) => _ticket = _ticket.copyWith(
             customerId: int.parse(newValue),
           ),
+          editable: widget.editable,
         ),
         const SizedBox(
           height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                context.read<TicketCubit>().updateTicket(
-                      _ticket,
-                      widget.ticket == null,
-                    );
-              },
-              child: const Text('Обновить'),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (widget.ticket != null) {
-                  context.read<TicketCubit>().deleteTicket(
-                        widget.ticket!,
-                      );
-                }
-              },
-              child: const Text('Удалить'),
-            ),
-          ],
         ),
       ],
     );

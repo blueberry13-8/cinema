@@ -21,14 +21,19 @@ class TicketCubit extends Cubit<TicketState> {
     }
   }
 
-  Future<void> loadTickets() async {
+  Future<void> loadTickets([String login='']) async {
     Success? prevState;
     if (state case Success state) {
       prevState = state.copyWith();
     }
     emit(const TicketState.loading());
     try {
-      final tickets = await Database().getTickets();
+      final List<Ticket> tickets;
+      if (login.isEmpty){
+        tickets = await Database().getTickets();
+      } else {
+        tickets = await Database().getUserTickets(login);
+      }
       emit(
         TicketState.success(
           tickets: tickets,

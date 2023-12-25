@@ -8,8 +8,6 @@ import 'admin_overview_page.dart';
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
-
-
   @override
   State<AuthPage> createState() => _AuthPageState();
 }
@@ -35,10 +33,6 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: null,
-        automaticallyImplyLeading: false,
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 350.0,
@@ -74,10 +68,11 @@ class _AuthPageState extends State<AuthPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (_controllerPassword.text.length < 8){
+                if (_controllerPassword.text.length < 8) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Длина пароля должна быть не меньше 8 символов.'),
+                      content: Text(
+                          'Длина пароля должна быть не меньше 8 символов.'),
                     ),
                   );
                   return;
@@ -95,7 +90,7 @@ class _AuthPageState extends State<AuthPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const UserOverviewPage()),
+                          builder: (context) => UserOverviewPage(login: _controllerLogin.text)),
                     );
                   }
                 } else {
