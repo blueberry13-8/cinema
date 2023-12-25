@@ -21,8 +21,8 @@ CREATE TABLE Hall (
 CREATE TABLE Session (
     id SERIAL PRIMARY KEY,
     start_time TIMESTAMP,
-    movie_id INT REFERENCES Movie(id) ON DELETE ,
-    hall_id INT REFERENCES Hall(id) ON DELETE
+    movie_id INT REFERENCES Movie(id) ON DELETE CASCADE,
+    hall_id INT REFERENCES Hall(id) ON DELETE CASCADE
 );
 
 -- Create Customer Table
@@ -38,8 +38,8 @@ CREATE TABLE Ticket (
     seat_number INT,
     row_number INT,
     price DECIMAL(10, 2),
-    session_id INT REFERENCES Session(id) ON DELETE ,
-    customer_id INT REFERENCES Customer(id) ON DELETE
+    session_id INT REFERENCES Session(id) ON DELETE CASCADE,
+    customer_id INT REFERENCES Customer(id) ON DELETE CASCADE
 );
 
 -- Create Employee Table
@@ -52,8 +52,8 @@ CREATE TABLE Employee (
 
 -- Create Ternary Relationship Table
 CREATE TABLE Employee_Customer_Ticket (
-    employee_id INT REFERENCES Employee(id) ON DELETE ,
-    customer_id INT REFERENCES Customer(id) ON DELETE ,
-    ticket_id INT REFERENCES Ticket(id) ON DELETE ,
+    employee_id INT REFERENCES Employee(id) ON DELETE CASCADE,
+    customer_id INT REFERENCES Customer(id) ON DELETE CASCADE,
+    ticket_id INT REFERENCES Ticket(id) ON DELETE CASCADE,
     PRIMARY KEY (employee_id, customer_id, ticket_id)
 );
