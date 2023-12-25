@@ -17,9 +17,10 @@ INSERT INTO Session (start_time, movie_id, hall_id) VALUES
 
 -- Insert data into Customer table
 INSERT INTO Customer (login, password) VALUES
-    ('customer1', 'password1'),
-    ('customer2', 'password2'),
-    ('customer3', 'password3');
+    ('admin', '5f4dcc3b5aa765d61d8327deb882cf99'),
+    ('customer1', '7c6a180b36896a0a8c02787eeafb0e4c'),
+    ('customer2', '6cb75f652a9b52798eb6cf2201057c73'),
+    ('customer3', '819b0643d6b89dc9b579fdfc9094f28e');
 
 -- Insert data into Employee table
 INSERT INTO Employee (name, position, salary) VALUES

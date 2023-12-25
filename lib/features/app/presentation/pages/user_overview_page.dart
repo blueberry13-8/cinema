@@ -1,18 +1,17 @@
 import 'package:cinema/features/app/domain/repositories/database.dart';
-import 'package:cinema/features/app/presentation/widgets/customers_table.dart';
 import 'package:cinema/features/app/presentation/widgets/sessions_table.dart';
 import 'package:cinema/features/app/presentation/widgets/tickets_table.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/movies_table.dart';
 
-class AdminOverviewPage extends StatelessWidget {
-  const AdminOverviewPage({super.key});
+class UserOverviewPage extends StatelessWidget {
+  const UserOverviewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           leading: null,
@@ -20,9 +19,6 @@ class AdminOverviewPage extends StatelessWidget {
           bottom: const TabBar(
             tabAlignment: TabAlignment.center,
             tabs: [
-              Tab(
-                child: Text('Пользователи'),
-              ),
               Tab(
                 child: Text('Фильмы'),
               ),
@@ -45,19 +41,9 @@ class AdminOverviewPage extends StatelessWidget {
               FutureBuilder(
                 builder: (context, snapshot) {
                   return snapshot.hasData
-                      ? CustomersTable(
-                          customers: snapshot.requireData,
-                        )
-                      : const CircularProgressIndicator();
-                },
-                future: Database().getCustomers(),
-              ),
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  return snapshot.hasData
                       ? MoviesTable(
-                          movies: snapshot.requireData,
-                        )
+                    movies: snapshot.requireData,
+                  )
                       : const CircularProgressIndicator();
                 },
                 future: Database().getMovies(),
@@ -66,8 +52,8 @@ class AdminOverviewPage extends StatelessWidget {
                 builder: (context, snapshot) {
                   return snapshot.hasData
                       ? SessionsTable(
-                          sessions: snapshot.requireData,
-                        )
+                    sessions: snapshot.requireData,
+                  )
                       : const CircularProgressIndicator();
                 },
                 future: Database().getSessions(),
@@ -76,8 +62,8 @@ class AdminOverviewPage extends StatelessWidget {
                 builder: (context, snapshot) {
                   return snapshot.hasData
                       ? TicketsTable(
-                          tickets: snapshot.requireData,
-                        )
+                    tickets: snapshot.requireData,
+                  )
                       : const CircularProgressIndicator();
                 },
                 future: Database().getTickets(),
