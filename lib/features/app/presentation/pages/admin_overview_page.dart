@@ -5,6 +5,7 @@ import 'package:cinema/features/app/presentation/widgets/tickets_table.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/movies_table.dart';
+import 'movies_page.dart';
 
 class AdminOverviewPage extends StatelessWidget {
   const AdminOverviewPage({super.key});
@@ -50,16 +51,7 @@ class AdminOverviewPage extends StatelessWidget {
                 },
                 future: Database().getCustomers(),
               ),
-              FutureBuilder(
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? MoviesTable(
-                          movies: snapshot.requireData,
-                        )
-                      : const CircularProgressIndicator();
-                },
-                future: Database().getMovies(),
-              ),
+              const MoviesPage(),
               FutureBuilder(
                 builder: (context, snapshot) {
                   return snapshot.hasData

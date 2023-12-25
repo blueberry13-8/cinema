@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class MyFormField<T> extends StatefulWidget {
-  const MyFormField({super.key, required this.fieldName, required this.value});
+  const MyFormField({
+    super.key,
+    required this.fieldName,
+    required this.value,
+    this.onChanged,
+  });
 
   final String fieldName;
   final T value;
+  final void Function(String)? onChanged;
 
   @override
   State<MyFormField<T>> createState() => _MyFormFieldState<T>();
@@ -21,7 +27,6 @@ class _MyFormFieldState<T> extends State<MyFormField<T>> {
 
   @override
   void didUpdateWidget(covariant MyFormField<T> oldWidget) {
-    // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     _controller.text = widget.value.toString();
   }
@@ -43,12 +48,14 @@ class _MyFormFieldState<T> extends State<MyFormField<T>> {
           ),
         ),
         Expanded(
-            child: TextFormField(
-          controller: _controller,
-          decoration: InputDecoration(
-            hintText: widget.fieldName,
+          child: TextFormField(
+            controller: _controller,
+            onChanged: widget.onChanged,
+            decoration: InputDecoration(
+              hintText: widget.fieldName,
+            ),
           ),
-        )),
+        ),
       ],
     );
   }
