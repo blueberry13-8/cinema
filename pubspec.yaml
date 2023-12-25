@@ -41,6 +41,7 @@ dependencies:
   data_table_2: ^2.5.9
   postgres: ^3.0.4
   logger: ^2.0.2+1
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cinema/features/app/domain/models/movie.dart';
 import 'package:logger/logger.dart';
 import 'package:postgres/postgres.dart';
@@ -6,6 +8,7 @@ import '../models/employee.dart';
 import '../models/hall.dart';
 import '../models/movie_session.dart';
 import '../models/ticket.dart';
+import 'package:crypto/crypto.dart';
 
 class Database {
   static final Database _db = Database._privateConstructor();
@@ -169,7 +172,7 @@ class Database {
   Future<void> deleteMovie(Movie item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Movie WHERE id=$1',
+      r'DELETE CASCADE FROM Movie WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -193,7 +196,7 @@ class Database {
   Future<void> deleteHall(Hall item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Hall WHERE id=$1',
+      r'DELETE CASCADE FROM Hall WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -217,7 +220,7 @@ class Database {
   Future<void> deleteSession(MovieSession item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Session WHERE id=$1',
+      r'DELETE CASCADE FROM Session WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -241,7 +244,7 @@ class Database {
   Future<void> deleteCustomer(Customer item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Customer WHERE id=$1',
+      r'DELETE CASCADE FROM Customer WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -265,7 +268,7 @@ class Database {
   Future<void> deleteEmployee(Employee item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Employee WHERE id=$1',
+      r'DELETE CASCADE FROM Employee WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -289,7 +292,7 @@ class Database {
   Future<void> deleteTicket(Ticket item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Ticket WHERE id=$1',
+      r'DELETE CASCADE FROM Ticket WHERE id=$1',
       parameters: [item.id],
     );
   }
@@ -302,4 +305,17 @@ class Database {
     );
   }
 
+  Future<bool> login(String login, String password) async {
+    await connect();
+    var hashedPassword = md5.convert(utf8.encode(password)).toString();
+    print(hashedPassword);
+    var result = await conn!.execute(
+      r'SELECT * FROM Customer WHERE login=$1 and password=$2',
+      parameters: [login, hashedPassword],
+    );
+    if (result.length == 1){
+      return true;
+    }
+    return false;
+  }
 }
