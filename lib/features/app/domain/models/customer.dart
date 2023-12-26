@@ -18,6 +18,6 @@ class Customer with _$Customer {
 
 const kCustomerFields = [
   'ID',
-  'Login',
-  'Password',
+  'Логин',
+  'Пароль',
 ];

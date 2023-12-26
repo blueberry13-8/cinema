@@ -19,7 +19,7 @@ class MovieSession with _$MovieSession {
 
 const kSessionFields = [
   'ID',
-  'Movie ID',
-  'Hall ID',
-  'Start time',
+  'ID фильма',
+  'ID зала',
+  'Время начала',
 ];
