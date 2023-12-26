@@ -16,7 +16,7 @@ class Database {
   Database._privateConstructor();
 
   final String user = 'postgres',
-      password = 'postgres',
+      password = 'buter',
       host = 'localhost',
       database = 'cinema';
 

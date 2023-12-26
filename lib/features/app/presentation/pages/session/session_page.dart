@@ -95,6 +95,7 @@ class _SessionsPageState extends State<_SessionsPage> {
                   child: SessionsTable(
                     sessions: filtered(state.sessions, _searchController.text),
                     selectedSessionIndex: state.selectedSessionIndex,
+                    editable: false,
                   ),
                 ),
                 if (state.selectedSessionIndex != null)

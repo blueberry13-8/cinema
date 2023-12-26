@@ -10,11 +10,14 @@ class SessionsTable extends StatelessWidget {
     super.key,
     required this.sessions,
     this.selectedSessionIndex,
+    this.editable=true,
   });
 
   final List<MovieSession> sessions;
 
   final int? selectedSessionIndex;
+
+  final bool editable;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,10 @@ class SessionsTable extends StatelessWidget {
       horizontalMargin: 12,
       minWidth: 600,
       showCheckboxColumn: false,
-      columns: kSessionFields.map((e) => DataColumn2(label: Text(e),),).toList(),
+      columns: editable
+          ? kSessionFields.map((e) => DataColumn2(label: Text(e),),).toList()
+          : kSessionFields.sublist(1).map((e) => DataColumn2(label: Text(e),),).toList(),
+      // columns: kSessionFields.map((e) => DataColumn2(label: Text(e),),).toList(),
       rows: sessions.asMap().entries.map(
             (entry) {
           final index = entry.key;
@@ -36,9 +42,10 @@ class SessionsTable extends StatelessWidget {
               }
             },
             cells: [
-              DataCell(
-                Text('${session.id}'),
-              ),
+              if (editable)
+                DataCell(
+                  Text('${session.id}'),
+                ),
               DataCell(
                 Text('${session.hallId}'),
               ),

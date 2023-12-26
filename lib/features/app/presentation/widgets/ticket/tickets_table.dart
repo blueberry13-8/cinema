@@ -9,7 +9,9 @@ class TicketsTable extends StatelessWidget {
   const TicketsTable({
     super.key,
     required this.tickets,
-    this.selectedTicketIndex, this.scrollController,
+    this.selectedTicketIndex,
+    this.scrollController,
+    this.editable = true,
   });
 
   final List<Ticket> tickets;
@@ -17,23 +19,19 @@ class TicketsTable extends StatelessWidget {
   final int? selectedTicketIndex;
 
   final ScrollController? scrollController;
+  final bool editable;
 
   @override
   Widget build(BuildContext context) {
     return DataTable2(
       scrollController: scrollController,
-
       columnSpacing: 12,
       horizontalMargin: 12,
       minWidth: 600,
       showCheckboxColumn: false,
-      columns: kTicketFields
-          .map(
-            (e) => DataColumn2(
-              label: Text(e),
-            ),
-          )
-          .toList(),
+      columns: editable
+          ? kTicketFields.map((e) => DataColumn2(label: Text(e),),).toList()
+          : kTicketFields.sublist(1).map((e) => DataColumn2(label: Text(e),),).toList(),
       rows: tickets.asMap().entries.map(
         (entry) {
           final index = entry.key;
@@ -46,9 +44,10 @@ class TicketsTable extends StatelessWidget {
               }
             },
             cells: [
-              DataCell(
-                Text('${ticket.id}'),
-              ),
+              if (editable)
+                DataCell(
+                  Text('${ticket.id}'),
+                ),
               DataCell(
                 Text('${ticket.seatNumber}'),
               ),

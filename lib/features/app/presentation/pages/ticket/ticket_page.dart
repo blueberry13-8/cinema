@@ -101,6 +101,7 @@ class _TicketsPageState extends State<_TicketsPage> {
                   child: TicketsTable(
                     tickets: filtered(state.tickets, _searchController.text),
                     selectedTicketIndex: state.selectedTicketIndex,
+                    editable: false,
                   ),
                 ),
                 if (state.selectedTicketIndex != null)

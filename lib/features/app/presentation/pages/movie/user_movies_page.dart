@@ -84,6 +84,7 @@ class _UserMoviesPageState extends State<_UserMoviesPage> {
               child: MoviesTable(
                 movies: filtered(state.movies, _searchController.text),
                 selectedMovieIndex: state.selectedMovieIndex,
+                editable: false,
               ),
             ),
             if (state.selectedMovieIndex != null)

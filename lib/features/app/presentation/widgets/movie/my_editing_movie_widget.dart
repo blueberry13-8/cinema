@@ -39,14 +39,15 @@ class _MyEditingMovieWidgetState extends State<MyEditingMovieWidget> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        MyFormField(
-          enabled: false,
-          fieldName: widget.fields[0],
-          value: widget.movie?.id,
-          onChanged: (newValue) =>
-              _movie = _movie.copyWith(id: int.parse(newValue)),
-          editable: false,
-        ),
+        if (widget.editable)
+          MyFormField(
+            enabled: false,
+            fieldName: widget.fields[0],
+            value: widget.movie?.id,
+            onChanged: (newValue) =>
+                _movie = _movie.copyWith(id: int.parse(newValue)),
+            editable: false,
+          ),
         MyFormField(
           fieldName: widget.fields[1],
           value: widget.movie?.duration,

@@ -10,11 +10,14 @@ class CustomersTable extends StatelessWidget {
     super.key,
     required this.customers,
     this.selectedCustomerIndex,
+    this.editable=true,
   });
 
   final List<Customer> customers;
 
   final int? selectedCustomerIndex;
+
+  final bool editable;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,8 @@ class CustomersTable extends StatelessWidget {
       horizontalMargin: 12,
       minWidth: 600,
       showCheckboxColumn: false,
-      columns: kCustomerFields.map((e) => DataColumn2(label: Text(e),),).toList(),
+      columns: editable ? kCustomerFields.map((e) => DataColumn2(label: Text(e),),).toList():
+                          kCustomerFields.sublist(1).map((e) => DataColumn2(label: Text(e),),).toList(),
       rows: customers.asMap().entries.map(
             (entry) {
           final index = entry.key;
@@ -36,9 +40,10 @@ class CustomersTable extends StatelessWidget {
               }
             },
             cells: [
-              DataCell(
-                Text('${customer.id}'),
-              ),
+              if (editable)
+                DataCell(
+                  Text('${customer.id}'),
+                ),
               DataCell(
                 Text(customer.login),
               ),

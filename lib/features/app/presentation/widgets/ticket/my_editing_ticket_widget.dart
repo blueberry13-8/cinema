@@ -46,15 +46,16 @@ class _MyEditingTicketWidgetState extends State<MyEditingTicketWidget> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        MyFormField(
-          enabled: false,
-          fieldName: widget.fields[0],
-          value: widget.ticket?.id,
-          onChanged: (newValue) => _ticket = _ticket.copyWith(
-            id: int.parse(newValue),
+        if (widget.editable)
+          MyFormField(
+            enabled: false,
+            fieldName: widget.fields[0],
+            value: widget.ticket?.id,
+            onChanged: (newValue) => _ticket = _ticket.copyWith(
+              id: int.parse(newValue),
+            ),
+            editable: false,
           ),
-          editable: false,
-        ),
         MyFormField(
           fieldName: widget.fields[1],
           value: widget.ticket?.seatNumber,

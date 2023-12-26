@@ -10,11 +10,14 @@ class MoviesTable extends StatelessWidget {
     super.key,
     required this.movies,
     this.selectedMovieIndex,
+    this.editable=true,
   });
 
   final List<Movie> movies;
 
   final int? selectedMovieIndex;
+
+  final bool editable;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,10 @@ class MoviesTable extends StatelessWidget {
       horizontalMargin: 12,
       minWidth: 600,
       showCheckboxColumn: false,
-      columns: kMovieFields.map((e) => DataColumn2(label: Text(e),),).toList(),
+      columns: editable
+          ? kMovieFields.map((e) => DataColumn2(label: Text(e),),).toList()
+          : kMovieFields.sublist(1).map((e) => DataColumn2(label: Text(e),),).toList(),
+      // columns: kMovieFields.map((e) => DataColumn2(label: Text(e),),).toList(),
       rows: movies.asMap().entries.map(
         (entry) {
           final index = entry.key;
@@ -36,9 +42,10 @@ class MoviesTable extends StatelessWidget {
               }
             },
             cells: [
-              DataCell(
-                Text('${movie.id}'),
-              ),
+              if (editable)
+                DataCell(
+                  Text('${movie.id}'),
+                ),
               DataCell(
                 Text('${movie.duration}'),
               ),

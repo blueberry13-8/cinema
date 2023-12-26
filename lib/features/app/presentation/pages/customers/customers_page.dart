@@ -95,6 +95,7 @@ class _CustomersPageState extends State<_CustomersPage> {
                   child: CustomersTable(
                     customers: filtered(state.customers, _searchController.text),
                     selectedCustomerIndex: state.selectedCustomerIndex,
+                    editable: false,
                   ),
                 ),
                 if (state.selectedCustomerIndex != null)
