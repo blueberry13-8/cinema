@@ -20,9 +20,9 @@ class Ticket with _$Ticket {
 
 const kTicketFields = [
   'ID',
-  'Seat number',
-  'Row number',
-  'Price',
-  'Session ID',
-  'Customer ID',
+  'Номер сидения',
+  'Номер ряда',
+  'Цена',
+  'ID сеанса',
+  'ID посетителя',
 ];

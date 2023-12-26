@@ -86,7 +86,7 @@ class _TicketsPageState extends State<_TicketsPage> {
                     controller: _searchController,
                     onChanged: (newValue) => setState(() {}),
                     decoration: const InputDecoration(
-                      hintText: 'Search...',
+                      hintText: 'Поиск...',
                       icon: Icon(
                         Icons.search,
                       ),

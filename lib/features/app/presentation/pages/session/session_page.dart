@@ -83,7 +83,7 @@ class _SessionsPageState extends State<_SessionsPage> {
                     controller: _searchController,
                     onChanged: (newValue) => setState(() {}),
                     decoration: const InputDecoration(
-                      hintText: 'Search...',
+                      hintText: 'Поиск...',
                       icon: Icon(
                         Icons.search,
                       ),

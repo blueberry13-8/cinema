@@ -17,4 +17,4 @@ class Movie with _$Movie {
       _$MovieFromJson(json);
 }
 
-const kMovieFields = ['ID', 'Duration', 'Genre', 'Name'];
+const kMovieFields = ['ID', 'Длительность', 'Жанр', 'Название'];

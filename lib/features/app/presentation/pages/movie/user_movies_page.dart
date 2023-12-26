@@ -70,7 +70,7 @@ class _UserMoviesPageState extends State<_UserMoviesPage> {
                 controller: _searchController,
                 onChanged: (newValue) => setState(() {}),
                 decoration: const InputDecoration(
-                  hintText: 'Search...',
+                  hintText: 'Поиск...',
                   icon: Icon(
                     Icons.search,
                   ),
