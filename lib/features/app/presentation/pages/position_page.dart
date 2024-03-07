@@ -3,11 +3,16 @@ import 'package:cinema/features/app/presentation/bloc/position/position_cubit.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widgets/position/positions_table.dart';
-import '../../widgets/position/my_editing_position_widget.dart';
+import '../widgets/position/positions_table.dart';
+import '../widgets/position/my_editing_position_widget.dart';
 
 class PositionsPage extends StatelessWidget {
-  const PositionsPage({super.key});
+  const PositionsPage({
+    super.key,
+    required this.editable,
+  });
+
+  final bool editable;
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +20,16 @@ class PositionsPage extends StatelessWidget {
       create: (context) => PositionCubit()..loadPositions(),
       child: _PositionsPage(
         key: key,
+        editable: editable,
       ),
     );
   }
 }
 
 class _PositionsPage extends StatefulWidget {
-  const _PositionsPage({super.key});
+  const _PositionsPage({super.key, required this.editable});
+
+  final bool editable;
 
   @override
   State<_PositionsPage> createState() => _PositionsPageState();
@@ -47,9 +55,9 @@ class _PositionsPageState extends State<_PositionsPage> {
     return positions
         .where(
           (element) => element.name.toLowerCase().contains(
-        query.toLowerCase(),
-      ),
-    )
+                query.toLowerCase(),
+              ),
+        )
         .toList();
   }
 
@@ -59,18 +67,19 @@ class _PositionsPageState extends State<_PositionsPage> {
     if (state case Success state) {
       return Stack(
         children: [
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FloatingActionButton(
-                onPressed: () {
-                  context.read<PositionCubit>().selectPosition(-1);
-                },
-                child: const Icon(Icons.add),
+          if (widget.editable)
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    context.read<PositionCubit>().selectPosition(-1);
+                  },
+                  child: const Icon(Icons.add),
+                ),
               ),
             ),
-          ),
           SingleChildScrollView(
             child: Column(
               children: [
@@ -93,9 +102,10 @@ class _PositionsPageState extends State<_PositionsPage> {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 400),
                   child: PositionsTable(
-                    positions: filtered(state.positions, _searchController.text),
+                    positions:
+                        filtered(state.positions, _searchController.text),
                     selectedPositionIndex: state.selectedPositionIndex,
-                    editable: true,
+                    editable: widget.editable,
                   ),
                 ),
                 if (state.selectedPositionIndex != null)
@@ -106,11 +116,12 @@ class _PositionsPageState extends State<_PositionsPage> {
                     ),
                     child: MyEditingPositionWidget(
                       position: state.selectedPositionIndex! >= 0 &&
-                          state.selectedPositionIndex! <
-                              state.positions.length
+                              state.selectedPositionIndex! <
+                                  state.positions.length
                           ? state.positions[state.selectedPositionIndex!]
                           : null,
                       fields: kPositionFields,
+                      editable: widget.editable,
                     ),
                   ),
               ],
@@ -127,4 +138,3 @@ class _PositionsPageState extends State<_PositionsPage> {
     }
   }
 }
-

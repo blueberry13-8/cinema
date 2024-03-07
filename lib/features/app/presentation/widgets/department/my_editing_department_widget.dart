@@ -10,10 +10,12 @@ class MyEditingDepartmentTable extends StatefulWidget {
     super.key,
     required this.fields,
     this.department,
+    required this.editable,
   });
 
   final Department? department;
   final List<String> fields;
+  final bool editable;
 
   @override
   State<MyEditingDepartmentTable> createState() =>
@@ -43,28 +45,28 @@ class _MyEditingDepartmentTableState extends State<MyEditingDepartmentTable> {
       mainAxisSize: MainAxisSize.min,
       children: [
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[0],
           value: widget.department?.id,
           onChanged: (newValue) =>
-          _department = _department.copyWith(id: int.parse(newValue)),
-          editable: false,
+              _department = _department.copyWith(id: int.parse(newValue)),
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[1],
           value: widget.department?.name,
           onChanged: (newValue) =>
-          _department = _department.copyWith(name: newValue),
-          editable: false,
+              _department = _department.copyWith(name: newValue),
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[2],
           value: widget.department?.description,
           onChanged: (newValue) =>
-          _department = _department.copyWith(description: newValue),
-          editable: false,
+              _department = _department.copyWith(description: newValue),
+          editable: widget.editable,
         ),
         const SizedBox(
           height: 30,
@@ -74,10 +76,12 @@ class _MyEditingDepartmentTableState extends State<MyEditingDepartmentTable> {
           children: [
             ElevatedButton(
               onPressed: () {
-                context.read<DepartmentCubit>().updateDepartment(
-                  _department,
-                  widget.department == null,
-                );
+                if (widget.editable) {
+                  context.read<DepartmentCubit>().updateDepartment(
+                        _department,
+                        widget.department == null,
+                      );
+                }
               },
               child: const Text('Обновить'),
             ),
@@ -86,10 +90,10 @@ class _MyEditingDepartmentTableState extends State<MyEditingDepartmentTable> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (widget.department != null) {
+                if (widget.editable && widget.department != null) {
                   context.read<DepartmentCubit>().deleteDepartment(
-                    widget.department!,
-                  );
+                        widget.department!,
+                      );
                 }
               },
               child: const Text('Удалить'),

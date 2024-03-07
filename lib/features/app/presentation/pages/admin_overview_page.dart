@@ -1,7 +1,7 @@
-import 'package:cinema/features/app/presentation/pages/department/department_page.dart';
-import 'package:cinema/features/app/presentation/pages/new_employee/new_employee_page.dart';
-import 'package:cinema/features/app/presentation/pages/position/position_page.dart';
-import 'package:cinema/features/app/presentation/pages/salary_payment/salary_payments_page.dart';
+import 'package:cinema/features/app/presentation/pages/department_page.dart';
+import 'package:cinema/features/app/presentation/pages/new_employee_page.dart';
+import 'package:cinema/features/app/presentation/pages/position_page.dart';
+import 'package:cinema/features/app/presentation/pages/salary_payments_page.dart';
 import 'package:flutter/material.dart';
 
 class AdminOverviewPage extends StatelessWidget {
@@ -39,9 +39,9 @@ class AdminOverviewPage extends StatelessWidget {
           child: TabBarView(
             children: [
               NewEmployeePage(),
-              DepartmentPage(),
-              PositionsPage(),
-              SalaryPaymentsPage(),
+              DepartmentPage(editable: true),
+              PositionsPage(editable: true),
+              SalaryPaymentsPage(editable: true, employeeId: null),
             ],
           ),
         ),

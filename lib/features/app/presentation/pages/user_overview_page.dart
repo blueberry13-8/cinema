@@ -1,11 +1,8 @@
-import 'package:cinema/features/app/presentation/pages/department/department_page.dart';
-import 'package:cinema/features/app/presentation/pages/position/position_page.dart';
-import 'package:cinema/features/app/presentation/pages/position/user_position_page.dart';
-import 'package:cinema/features/app/presentation/pages/salary_payment/salary_payments_page.dart';
-import 'package:cinema/features/app/presentation/pages/salary_payment/user_salary_payments_page.dart';
+import 'package:cinema/features/app/presentation/pages/position_page.dart';
+import 'package:cinema/features/app/presentation/pages/salary_payments_page.dart';
 import 'package:flutter/material.dart';
 
-import 'department/user_department_page.dart';
+import 'department_page.dart';
 
 class UserOverviewPage extends StatelessWidget {
   const UserOverviewPage({super.key, required this.login});
@@ -40,9 +37,10 @@ class UserOverviewPage extends StatelessWidget {
           ),
           child: TabBarView(
             children: [
-              const UserDepartmentPage(),
-              const UserPositionsPage(),
-              UserSalaryPaymentsPage(employeeId: login),
+              const DepartmentPage(editable: false),
+              // const UserPositionsPage(),
+              const PositionsPage(editable: false),
+              SalaryPaymentsPage(employeeId: login, editable: false),
               //UserTicketsPage(login: login),
             ],
           ),
