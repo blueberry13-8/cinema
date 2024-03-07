@@ -139,7 +139,7 @@ class Database {
   Future<void> deleteDepartment(Department item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Departments WHERE department_id=$1',
+      r'DELETE FROM departments WHERE department_id=$1',
       parameters: [item.id],
     );
   }
