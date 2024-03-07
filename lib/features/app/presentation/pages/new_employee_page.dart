@@ -1,33 +1,33 @@
-import 'package:cinema/features/app/domain/models/department.dart';
-import 'package:cinema/features/app/presentation/bloc/department/department_cubit.dart';
-import 'package:cinema/features/app/presentation/widgets/department/my_editing_department_widget.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cinema/features/app/domain/models/new_employee.dart';
+import 'package:cinema/features/app/presentation/widgets/new_employee/my_edition_new_employee_widget.dart';
+import 'package:cinema/features/app/presentation/widgets/new_employee/new_employees_table.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/new_employee/new_employee_cubit.dart';
 
-import '../../widgets/department/department_table.dart';
 
-class DepartmentPage extends StatelessWidget {
-  const DepartmentPage({super.key});
+class NewEmployeePage extends StatelessWidget {
+  const NewEmployeePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DepartmentCubit()..loadDepartments(),
-      child: _DepartmentsPage(
+      create: (context) => NewEmployeeCubit()..loadNewEmployees(),
+      child: _NewEmployeePage(
         key: key,
       ),
     );
   }
 }
 
-class _DepartmentsPage extends StatefulWidget {
-  const _DepartmentsPage({super.key});
+class _NewEmployeePage extends StatefulWidget {
+  const _NewEmployeePage({super.key});
 
   @override
-  State<_DepartmentsPage> createState() => _DepartmentsPageState();
+  State<_NewEmployeePage> createState() => _NewEmployeePageState();
 }
 
-class _DepartmentsPageState extends State<_DepartmentsPage> {
+class _NewEmployeePageState extends State<_NewEmployeePage> {
   late final TextEditingController _searchController;
 
   @override
@@ -42,11 +42,11 @@ class _DepartmentsPageState extends State<_DepartmentsPage> {
     super.dispose();
   }
 
-  List<Department> filtered(List<Department> departments, String? query) {
-    if (query == null) return departments;
-    return departments
+  List<NewEmployee> filtered(List<NewEmployee> newEmployees, String? query) {
+    if (query == null) return newEmployees;
+    return newEmployees
         .where(
-          (element) => element.name.toLowerCase().contains(
+          (element) => element.firstName.toLowerCase().contains(
         query.toLowerCase(),
       ),
     )
@@ -55,7 +55,7 @@ class _DepartmentsPageState extends State<_DepartmentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<DepartmentCubit>().state;
+    final state = context.watch<NewEmployeeCubit>().state;
     if (state case Success state) {
       return Stack(
         children: [
@@ -65,7 +65,7 @@ class _DepartmentsPageState extends State<_DepartmentsPage> {
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
                 onPressed: () {
-                  context.read<DepartmentCubit>().selectDepartment(-1);
+                  context.read<NewEmployeeCubit>().selectNewEmployee(-1);
                 },
                 child: const Icon(Icons.add),
               ),
@@ -92,25 +92,25 @@ class _DepartmentsPageState extends State<_DepartmentsPage> {
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 400),
-                  child: DepartmentsTable(
-                    departments: filtered(state.departments, _searchController.text),
-                    selectedDepartmentIndex: state.selectedDepartmentIndex,
+                  child: NewEmployeesTable(
+                    newEmployees: filtered(state.newEmployees, _searchController.text),
+                    selectedNewEmployeeIndex: state.selectedNewEmployeeIndex,
                     editable: true,
                   ),
                 ),
-                if (state.selectedDepartmentIndex != null)
+                if (state.selectedNewEmployeeIndex != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 150.0,
                       vertical: 20,
                     ),
-                    child: MyEditingDepartmentTable(
-                      department: state.selectedDepartmentIndex! >= 0 &&
-                          state.selectedDepartmentIndex! <
-                              state.departments.length
-                          ? state.departments[state.selectedDepartmentIndex!]
+                    child: MyEditingNewEmployeeWidget(
+                      newEmployee: state.selectedNewEmployeeIndex! >= 0 &&
+                          state.selectedNewEmployeeIndex! <
+                              state.newEmployees.length
+                          ? state.newEmployees[state.selectedNewEmployeeIndex!]
                           : null,
-                      fields: kDepartmentFields,
+                      fields: kNewEmployeeFields,
                     ),
                   ),
               ],

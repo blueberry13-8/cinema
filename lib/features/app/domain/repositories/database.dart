@@ -94,7 +94,7 @@ class Database {
   Future<void> deletePosition(Position item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Positions WHERE id=$1',
+      r'DELETE FROM Positions WHERE position_id=$1',
       parameters: [item.id],
     );
   }
@@ -102,7 +102,7 @@ class Database {
   Future<void> updatePosition(Position item) async {
     await connect();
     await conn!.execute(
-      r'UPDATE Positions SET name=$1, description=$2, salary=$3 WHERE id=$4',
+      r'UPDATE Positions SET name=$1, description=$2, salary=$3 WHERE position_id=$4',
       parameters: [item.name, item.description, item.salary, item.id],
     );
   }
@@ -139,7 +139,7 @@ class Database {
   Future<void> deleteDepartment(Department item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Departments WHERE id=$1',
+      r'DELETE FROM Departments WHERE department_id=$1',
       parameters: [item.id],
     );
   }
@@ -147,7 +147,7 @@ class Database {
   Future<void> updateDepartment(Department item) async {
     await connect();
     await conn!.execute(
-      r'UPDATE Departments SET name=$1, description=$2 WHERE id=$3',
+      r'UPDATE departments SET name=$1, description=$2 WHERE department_id=$3',
       parameters: [item.name, item.description, item.id],
     );
   }
@@ -197,7 +197,7 @@ class Database {
   Future<void> deleteNewEmployee(NewEmployee item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Employees WHERE id=$1',
+      r'DELETE FROM Employees WHERE employee_id=$1',
       parameters: [item.id],
     );
   }
@@ -205,7 +205,7 @@ class Database {
   Future<void> updateNewEmployee(NewEmployee item) async {
     await connect();
     await conn!.execute(
-      r'UPDATE Employees SET first_name=$1, surname=$2, start_date=$3, password=$4, other_info=$5, position_id=$6, department_id=$7 WHERE id=$8',
+      r'UPDATE Employees SET first_name=$1, surname=$2, start_date=$3, password=$4, other_info=$5, position_id=$6, department_id=$7 WHERE employee_id=$8',
       parameters: [
         item.firstName,
         item.surname,
@@ -255,7 +255,7 @@ class Database {
   Future<void> deleteSalaryPayment(SalaryPayment item) async {
     await connect();
     await conn!.execute(
-      r'DELETE FROM Salary_payments WHERE id=$1',
+      r'DELETE FROM Salary_payments WHERE payment_id=$1',
       parameters: [item.id],
     );
   }
@@ -263,7 +263,7 @@ class Database {
   Future<void> updateSalaryPayment(SalaryPayment item) async {
     await connect();
     await conn!.execute(
-      r'UPDATE Salary_payments SET payment_date=$1, employee_id=$2, amount=$3 WHERE id=$4',
+      r'UPDATE Salary_payments SET payment_date=$1, employee_id=$2, amount=$3 WHERE payment_id=$4',
       parameters: [item.date, item.employeeId, item.amount, item.id],
     );
   }

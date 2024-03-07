@@ -10,21 +10,26 @@ class MyEditingSalaryPaymentWidget extends StatefulWidget {
     super.key,
     required this.fields,
     this.salaryPayment,
+    required this.editable,
   });
 
   final SalaryPayment? salaryPayment;
   final List<String> fields;
+  final bool editable;
 
   @override
-  State<MyEditingSalaryPaymentWidget> createState() => _MyEditingSalaryPaymentWidgetState();
+  State<MyEditingSalaryPaymentWidget> createState() =>
+      _MyEditingSalaryPaymentWidgetState();
 }
 
-class _MyEditingSalaryPaymentWidgetState extends State<MyEditingSalaryPaymentWidget> {
+class _MyEditingSalaryPaymentWidgetState
+    extends State<MyEditingSalaryPaymentWidget> {
   @override
   void initState() {
     super.initState();
     if (widget.salaryPayment == null) {
-      _salaryPayment = SalaryPayment(id: -1, date: DateTime.now(), amount: 0, employeeId: 0);
+      _salaryPayment =
+          SalaryPayment(id: -1, date: DateTime.now(), amount: 0, employeeId: 0);
     } else {
       _salaryPayment = widget.salaryPayment!;
     }
@@ -38,46 +43,48 @@ class _MyEditingSalaryPaymentWidgetState extends State<MyEditingSalaryPaymentWid
       mainAxisSize: MainAxisSize.min,
       children: [
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[0],
           value: widget.salaryPayment?.id,
           onChanged: (newValue) =>
-          _salaryPayment = _salaryPayment.copyWith(id: int.parse(newValue)),
-          editable: false,
+              _salaryPayment = _salaryPayment.copyWith(id: int.parse(newValue)),
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[1],
           value: widget.salaryPayment?.date,
-          onChanged: (newValue) =>
-          _salaryPayment = _salaryPayment.copyWith(date: DateTime.parse(newValue)),
-          editable: false,
+          onChanged: (newValue) => _salaryPayment =
+              _salaryPayment.copyWith(date: DateTime.parse(newValue)),
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[2],
           value: widget.salaryPayment?.amount,
-          onChanged: (newValue) =>
-          _salaryPayment = _salaryPayment.copyWith(amount: num.parse(newValue)),
-          editable: false,
+          onChanged: (newValue) => _salaryPayment =
+              _salaryPayment.copyWith(amount: num.parse(newValue)),
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[3],
           value: widget.salaryPayment?.employeeId,
-          onChanged: (newValue) =>
-          _salaryPayment = _salaryPayment.copyWith(employeeId: int.parse(newValue)),
-          editable: false,
+          onChanged: (newValue) => _salaryPayment =
+              _salaryPayment.copyWith(employeeId: int.parse(newValue)),
+          editable: widget.editable,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () {
-                context.read<SalaryPaymentCubit>().updateSalaryPayment(
-                  _salaryPayment,
-                  widget.salaryPayment == null,
-                );
+                if (widget.editable) {
+                  context.read<SalaryPaymentCubit>().updateSalaryPayment(
+                        _salaryPayment,
+                        widget.salaryPayment == null,
+                      );
+                }
               },
               child: const Text('Обновить'),
             ),
@@ -86,10 +93,10 @@ class _MyEditingSalaryPaymentWidgetState extends State<MyEditingSalaryPaymentWid
             ),
             ElevatedButton(
               onPressed: () async {
-                if (widget.salaryPayment != null) {
+                if (widget.editable && widget.salaryPayment != null) {
                   context.read<SalaryPaymentCubit>().deleteSalaryPayment(
-                    widget.salaryPayment!,
-                  );
+                        widget.salaryPayment!,
+                      );
                 }
               },
               child: const Text('Удалить'),

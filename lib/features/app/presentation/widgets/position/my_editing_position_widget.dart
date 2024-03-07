@@ -10,10 +10,12 @@ class MyEditingPositionWidget extends StatefulWidget {
     super.key,
     required this.fields,
     this.position,
+    required this.editable,
   });
 
   final Position? position;
   final List<String> fields;
+  final bool editable;
 
   @override
   State<MyEditingPositionWidget> createState() =>
@@ -49,31 +51,31 @@ class _MyEditingPositionWidgetState extends State<MyEditingPositionWidget> {
           value: widget.position?.id,
           onChanged: (newValue) =>
           _position = _position.copyWith(id: int.parse(newValue)),
-          editable: false,
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[1],
           value: widget.position?.name,
           onChanged: (newValue) =>
           _position = _position.copyWith(name: newValue),
-          editable: false,
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[2],
           value: widget.position?.description,
           onChanged: (newValue) =>
           _position = _position.copyWith(description: newValue),
-          editable: false,
+          editable: widget.editable,
         ),
         MyFormField(
-          enabled: false,
+          enabled: widget.editable,
           fieldName: widget.fields[3],
           value: widget.position?.salary,
           onChanged: (newValue) =>
           _position = _position.copyWith(salary: num.parse(newValue)),
-          editable: false,
+          editable: widget.editable,
         ),
         const SizedBox(
           height: 30,
@@ -83,10 +85,12 @@ class _MyEditingPositionWidgetState extends State<MyEditingPositionWidget> {
           children: [
             ElevatedButton(
               onPressed: () {
-                context.read<PositionCubit>().updatePosition(
-                  _position,
-                  widget.position == null,
-                );
+                if (widget.editable) {
+                  context.read<PositionCubit>().updatePosition(
+                        _position,
+                        widget.position == null,
+                      );
+                }
               },
               child: const Text('Обновить'),
             ),
@@ -95,7 +99,7 @@ class _MyEditingPositionWidgetState extends State<MyEditingPositionWidget> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (widget.position != null) {
+                if (widget.editable && widget.position != null) {
                   context.read<PositionCubit>().deletePosition(
                     widget.position!,
                   );
