@@ -80,7 +80,7 @@ class _AuthPageState extends State<AuthPage> {
                 bool login = await Database()
                     .login(_controllerLogin.text, _controllerPassword.text);
                 if (login) {
-                  if (_controllerLogin.text == 'admin') {
+                  if (_controllerLogin.text == '1') {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

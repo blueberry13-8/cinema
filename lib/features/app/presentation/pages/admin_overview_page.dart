@@ -1,8 +1,8 @@
-import 'package:cinema/features/app/presentation/pages/customers/customers_page.dart';
-import 'package:cinema/features/app/presentation/pages/session/session_page.dart';
-import 'package:cinema/features/app/presentation/pages/ticket/ticket_page.dart';
+import 'package:cinema/features/app/presentation/pages/department/department_page.dart';
+import 'package:cinema/features/app/presentation/pages/new_employee/new_employee_page.dart';
+import 'package:cinema/features/app/presentation/pages/position/position_page.dart';
+import 'package:cinema/features/app/presentation/pages/salary_payment/salary_payments_page.dart';
 import 'package:flutter/material.dart';
-import 'movie/movies_page.dart';
 
 class AdminOverviewPage extends StatelessWidget {
   const AdminOverviewPage({super.key});
@@ -17,31 +17,31 @@ class AdminOverviewPage extends StatelessWidget {
             tabAlignment: TabAlignment.center,
             tabs: [
               Tab(
-                child: Text('Пользователи'),
+                child: Text('Работники'),
               ),
               Tab(
-                child: Text('Фильмы'),
+                child: Text('Отделы'),
               ),
               Tab(
-                child: Text('Сеансы'),
+                child: Text('Должности'),
               ),
               Tab(
-                child: Text('Билеты'),
+                child: Text('Выплаты'),
               ),
             ],
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
+        body: const Padding(
+          padding: EdgeInsets.symmetric(
             horizontal: 0,
             vertical: 0,
           ),
           child: TabBarView(
             children: [
-              const CustomersPage(),
-              const MoviesPage(),
-              const SessionsPage(),
-              const TicketsPage(),
+              NewEmployeePage(),
+              DepartmentPage(),
+              PositionsPage(),
+              SalaryPaymentsPage(),
             ],
           ),
         ),

@@ -1,6 +1,4 @@
-import 'package:cinema/features/app/presentation/pages/admin_overview_page.dart';
 import 'package:flutter/material.dart';
-
 import 'auth_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -9,15 +7,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cinema',
+      title: 'HR Department',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(fontSize: 18, color: Colors.white70),
         ),
-        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          color: Colors.black38,
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.red,
+          brightness: Brightness.dark,
+        ),
       ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      // home: const AdminOverviewPage(),
       home: const AuthPage(),
     );
   }

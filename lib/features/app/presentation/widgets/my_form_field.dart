@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class MyFormField<T> extends StatefulWidget {
   const MyFormField({
@@ -23,7 +22,7 @@ class MyFormField<T> extends StatefulWidget {
 
 class _MyFormFieldState<T> extends State<MyFormField<T>> {
   late TextEditingController _controller;
-  String? errorText = null;
+  String? errorText;
 
   @override
   void initState() {
@@ -63,7 +62,7 @@ class _MyFormFieldState<T> extends State<MyFormField<T>> {
                 try {
                   validate(_controller.text);
                   widget.onChanged!(text);
-                } on (FormatException e,){
+                } on (FormatException e,) {
                   errorText = 'Неправильный формат данных';
                 }
               }
